@@ -1,5 +1,11 @@
 # Automated Production Cell
 
+> **Stage 1 — AUTOMATE**  
+> First stage of the **Industrial Automation AI Lab**: building and controlling an automated production process before extending it into industrial monitoring and predictive maintenance.
+
+**Portfolio journey:** [01 — AUTOMATE](.) → [02 — MONITOR](../Project-02-industrial-monitoring-platform) → **03 — PREDICT (coming soon)**
+
+
 A small industrial automation project combining Beckhoff TwinCAT,
 PLC programming, Structured Text, Python, SQLite, n8n, and Airtable.
 
@@ -246,6 +252,20 @@ n8n response: 200
 - Python fault monitoring
 - PLC/Python architecture documentation
 - GitHub repository
+
+## Next Stage — MONITOR
+
+This project establishes the automated production environment and its production-data foundation.
+
+The next stage extends the journey from **machine control to machine monitoring**:
+
+**Automate → Monitor → Predict**
+
+→ [Project 02 — Industrial Monitoring Platform](../Project-02-industrial-monitoring-platform)
+
+Project 02 introduces IIoT data acquisition, MQTT, time-series monitoring, Grafana visualization, and automated machine-condition alerts.
+
+---
 
 ## Learning Objective
 

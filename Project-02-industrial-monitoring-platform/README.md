@@ -1,5 +1,11 @@
 # Industrial Monitoring Platform
 
+> **Stage 2 — MONITOR**  
+> The second stage of the **Industrial Automation AI Lab**: extending the automated production environment into machine-condition monitoring and Industrial IoT.
+
+**Portfolio journey:** [01 — AUTOMATE](../Project-01-automated-production-cell) → **02 — MONITOR** → **03 — PREDICT (coming soon)**
+
+
 A Python-based industrial monitoring system that simulates machine
 sensor data, processes measurements, stores industrial time-series data,
 visualizes machine performance, and generates automated alerts.
@@ -199,6 +205,24 @@ Warnings:
 -   CRITICAL_TEMPERATURE
 -   CRITICAL_VIBRATION
 -   CRITICAL_CURRENT
+
+## Journey from Automation to Predictive Maintenance
+
+Project 02 builds on the automated production foundation established in Project 01.
+
+The progression is:
+
+**Automate → Monitor → Predict**
+
+Project 01 focuses on machine control, production events, PLC logic, and production data.
+
+This project adds machine-condition monitoring through MQTT, Python, time-series data storage, Grafana visualization, and automated alerts.
+
+The next stage will use the monitoring data to develop **AI-based predictive maintenance** in Project 03.
+
+→ [Project 01 — Automated Production Cell](../Project-01-automated-production-cell)
+
+---
 
 ## Engineering Purpose
 

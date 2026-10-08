@@ -1,0 +1,4 @@
+paho-mqtt==2.1.0
+influxdb3-python
+requests
+pytest

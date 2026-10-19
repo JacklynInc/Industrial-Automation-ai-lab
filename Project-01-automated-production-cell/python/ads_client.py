@@ -65,3 +65,26 @@ def read_production_data(plc):
 def disconnect_from_plc(plc):
     """Close the ADS connection."""
     plc.close()
+
+def write_inspection_result(plc, inspection_ok):
+    """Write the inspection result and signal completion to the PLC."""
+
+    plc.write_by_name(
+        "GVL_ADS.InspectionOK",
+        bool(inspection_ok),
+        pyads.PLCTYPE_BOOL,
+    )
+
+    plc.write_by_name(
+        "GVL_ADS.InspectionComplete",
+        True,
+        pyads.PLCTYPE_BOOL,
+    )
+
+def read_inspection_request(plc):
+    """Check whether the PLC is requesting an inspection."""
+
+    return plc.read_by_name(
+        "GVL_ADS.InspectionRequest",
+        pyads.PLCTYPE_BOOL,
+    )

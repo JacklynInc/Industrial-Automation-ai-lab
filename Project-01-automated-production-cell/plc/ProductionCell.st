@@ -119,16 +119,22 @@ CASE State OF
 
 
     WORKPIECE_DETECTED:
-        IF PositionSensor THEN
-            State := INSPECTING;
-        END_IF;
+    IF PositionSensor THEN
+        InspectionRequest := TRUE;
+        InspectionComplete := FALSE;
+        State := INSPECTING;
+    END_IF;
 
 
     INSPECTING:
-        IF InspectionTimer.Q THEN
-            InspectionResult := InspectionOK;
-            State := SORTING;
-        END_IF;
+    IF NOT InspectionComplete THEN
+        (* Wait for Python to provide the inspection result *)
+    ELSE
+        InspectionResult := InspectionOK;
+        InspectionRequest := FALSE;
+        InspectionComplete := FALSE;
+        State := SORTING;
+    END_IF;
 
 
     SORTING:

@@ -1,6 +1,10 @@
 import sqlite3
 import time
 from datetime import datetime
+import random
+
+DEFECT_PROBABILITY = 0.05
+inspection_request_handled = False
 
 import requests
 
@@ -8,6 +12,8 @@ from ads_client import (
     connect_to_plc,
     read_production_data,
     disconnect_from_plc,
+    read_inspection_request,
+    write_inspection_result,
 )
 from statistics import get_production_statistics
 
@@ -57,6 +63,33 @@ def monitor_plc_fault(plc, last_fault_code):
         )
 
     return fault_code
+
+
+def handle_plc_inspection(plc):
+    """Respond only once to each PLC inspection request."""
+    global inspection_request_handled
+
+    request = read_inspection_request(plc)
+    print(
+    f"DEBUG | Request={request} | "
+    f"Machine={read_production_data(plc)['machine_status']}"
+)
+
+    if not request:
+        inspection_request_handled = False
+        return
+
+    if inspection_request_handled:
+        return
+
+    inspection_ok = random.random() >= DEFECT_PROBABILITY
+    write_inspection_result(plc, inspection_ok)
+
+    inspection_request_handled = True
+
+    result = "OK" if inspection_ok else "DEFECT"
+    print(f"Inspection result sent to PLC: {result}")
+
 
 def record_plc_production(
     plc,
@@ -205,13 +238,14 @@ print(
 )
 
 
+
 # ============================================================
 # PLC monitoring loop
 # ============================================================
 
 try:
-
     while True:
+        handle_plc_inspection(plc)
 
         (
             last_total_parts,
@@ -223,20 +257,18 @@ try:
             last_ok_parts,
             last_defect_parts,
         )
-        last_fault_code = monitor_plc_fault(
-            plc,last_fault_code,
-)
-        time.sleep(1)
 
+        last_fault_code = monitor_plc_fault(
+            plc,
+            last_fault_code,
+        )
+
+        time.sleep(0.1)
 
 except KeyboardInterrupt:
-
     print("\nPLC monitoring stopped.")
 
-
 finally:
-
     disconnect_from_plc(plc)
     connection.close()
-
     print("Connections closed.")
